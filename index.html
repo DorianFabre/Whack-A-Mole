@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11"> <!-- Stops IE from defaulting to older versions-->
+    <title>Whack-A-Mole</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/css.css">
+    <script src="js/js.js" defer></script>
+</head>
+
+<body>
+    <div id="outerContainer">
+        <article id="container">
+            <div id="mallet"></div>
+        </article>
+    </div>
+    <p id="score">YOUR SCORE: <span>0</span></p>
+    <p id="countdown">TIME LEFT: <span>60</span></p>
+    <div id="overlay">
+        <article>
+            <h1>WHACK-A-MOLE</h1>
+            <button onclick="startCountdown()" id="startButton">PLAY</button>
+        </article>
+    </div>
+</body>
+
+</html>
