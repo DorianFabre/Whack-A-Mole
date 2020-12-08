@@ -11,7 +11,6 @@ let seconds = 0;
 // Mole object
 function Mole(index) {
     this.id = 'molehole' + index,
-    this.appearance = 'normal',
     this.position = 'down',
     this.angel = null,
     this.moveMole = null
@@ -24,6 +23,7 @@ const splat = new Audio('audio/splat.mp3');
 
 // move the moles up & down at random, or down when whacked
 function popToggle(i, whacked) {
+    clearTimeout(moles[i].moveMole);
     const id = moles[i].id;
     const angel = moles[i].angel;
     let timer = 0;
@@ -31,7 +31,6 @@ function popToggle(i, whacked) {
     if (whacked && moles[i].position === 'up') { 
         document.getElementById(moles[i].id).querySelector('button').style.backgroundPosition = 'right';
         splat.play();
-        clearTimeout(moles[i].moveMole);
         timer = 0;
         score++;
         seconds++;
@@ -77,7 +76,7 @@ function createMoles(num) {
         moleHole.classList.add('molehole');
         moleHole.setAttribute('id', 'molehole' + i);        
         let content = '<img alt="grass" src="img/back.png" class="backGrass">';
-        content += '<button class="mole normal" onclick="popToggle(' + i + ', 1)">Mole</button>';
+        content += '<button class="mole" onclick="popToggle(' + i + ', 1)">Mole</button>';
         content += '<img alt="angel" src="img/angel.png" class="angel angelFlight" id="' + moles[i].angel + '">';
         content += '<img alt="grass" src="img/front.png" class="frontGrass">'
         moleHole.innerHTML = content;
@@ -85,7 +84,7 @@ function createMoles(num) {
     }
 }
 
-// Start the game
+// Start & end the game
 function startCountdown() {
     seconds = 30;
     score = 0;
@@ -95,7 +94,7 @@ function startCountdown() {
     document.getElementById('startButton').style.display = 'none';
     moles.map(function(mole, i){
         clearTimeout(mole.moveMole);
-        countdown ? clearInterval(countdown) : null;
+        if (countdown) clearInterval(countdown);
         popToggle(i, null);
     });
     music.play();
@@ -106,11 +105,9 @@ function startCountdown() {
             clearInterval(countdown);
             moles.map(function(mole){
                 clearTimeout(mole.moveMole);
+                console.log(mole.id, mole.moveMole)
                 document.getElementById(mole.id).querySelector('button').style.top = '60%';
                 mole.position = 'down';
-                setTimeout(function(){
-                    clearTimeout(mole.moveMole);
-                }, 250);
             });
             document.getElementById('overlay').querySelector('h1').innerHTML = 'YOU SCORED ' + score;
             document.getElementById('overlay').querySelector('button').innerHTML = 'PLAY AGAIN';
